@@ -58,6 +58,33 @@
   .icon-btn{ display:inline-flex; align-items:center; gap:0.4rem; cursor:pointer; font:inherit; font-size:0.78rem; font-weight:600; color:var(--text-2); background:color-mix(in srgb, var(--card) 70%, transparent); border:1px solid var(--line); border-radius:999px; padding:0.32rem 0.7rem; transition:color .15s,border-color .15s; }
   .icon-btn:hover{ color:var(--goal); border-color:var(--goal); }
 
+  /* PEPTIDEX nav button - biomedical x Pokedex */
+  .dex-btn{ position:relative; display:inline-flex; align-items:center; gap:0.45rem; text-decoration:none; font-size:0.76rem; font-weight:800; letter-spacing:0.09em; color:#FFF3F0; background:linear-gradient(175deg, #E5484D 0%, #C13037 55%, #9E2329 100%); border:1px solid color-mix(in srgb, #E5484D 60%, var(--line)); border-radius:999px; padding:0.3rem 0.75rem 0.3rem 0.4rem; box-shadow:inset 0 1px 0 rgba(255,255,255,.28), 0 2px 8px rgba(158,35,41,.35); overflow:hidden; transition:transform .15s, box-shadow .2s; }
+  .dex-btn::after{ content:""; position:absolute; inset:0; background:linear-gradient(105deg, transparent 35%, rgba(255,255,255,.24) 50%, transparent 65%); background-size:230% 100%; background-position:130% 0; pointer-events:none; }
+  .dex-btn:hover{ transform:translateY(-1px); box-shadow:inset 0 1px 0 rgba(255,255,255,.3), 0 4px 14px rgba(158,35,41,.5); }
+  .dex-btn:hover::after{ animation:shimmerBtn 0.9s ease-out; }
+  .dex-btn:focus-visible{ outline:2px solid var(--goal); outline-offset:2px; }
+  .dex-lens{ position:relative; width:20px; height:20px; border-radius:50%; flex:none; background:radial-gradient(circle at 34% 30%, #DFF4FF 0%, #6ECBF2 38%, #1B84D0 70%, #0A4E88 100%); border:2px solid rgba(255,246,244,.85); box-shadow:0 0 8px rgba(110,203,242,.8), inset 0 -2px 4px rgba(6,40,70,.55); }
+  .dex-lens::after{ content:""; position:absolute; top:3px; left:4px; width:6px; height:5px; border-radius:50%; background:rgba(255,255,255,.9); }
+  .dex-btn:hover .dex-lens{ animation:dexPing 1.2s ease-out infinite; }
+  @keyframes dexPing{ 0%,100%{ box-shadow:0 0 8px rgba(110,203,242,.8), inset 0 -2px 4px rgba(6,40,70,.55);} 50%{ box-shadow:0 0 15px rgba(110,203,242,1), inset 0 -2px 4px rgba(6,40,70,.55);} }
+  .dex-leds{ display:inline-flex; gap:3px; flex:none; }
+  .dex-leds i{ width:5px; height:5px; border-radius:50%; }
+  .dex-leds i:nth-child(1){ background:#FFD75E; box-shadow:0 0 4px #FFD75E; }
+  .dex-leds i:nth-child(2){ background:#5EF08A; box-shadow:0 0 4px #5EF08A; }
+  .dex-lbl{ font-family:ui-monospace,"SF Mono",Menlo,monospace; }
+  .dex-short{ display:none; }
+  @media (max-width:620px){
+    .dex-btn{ padding:0.26rem 0.55rem 0.26rem 0.3rem; font-size:0.68rem; gap:0.35rem; }
+    .dex-btn .dex-leds{ display:none; }
+    .dex-btn .dex-full{ display:none; }
+    .dex-btn .dex-short{ display:inline; }
+    .topbar{ gap:0.5rem; padding:0.6rem 0.8rem; }
+    .brand{ font-size:0.9rem; }
+    .brand .tag{ display:none; }
+    .hide-sm{ display:none; }
+  }
+
   .hero{ position:relative; padding:2.3rem 0 1rem; }
   .amino-mesh{ position:absolute; inset:-1rem -1rem auto -1rem; height:130%; z-index:-1; pointer-events:none; background-image:radial-gradient(circle at center, color-mix(in srgb, var(--goal) 42%, transparent) 0, transparent 1.4px); background-size:24px 24px; -webkit-mask:radial-gradient(80% 70% at 30% 20%, #000, transparent 75%); mask:radial-gradient(80% 70% at 30% 20%, #000, transparent 75%); opacity:.5; }
   .cursor-glow{ position:absolute; width:380px; height:380px; border-radius:50%; z-index:-1; pointer-events:none; background:radial-gradient(circle, color-mix(in srgb, var(--goal) 22%, transparent), transparent 65%); transform:translate(-50%,-50%); opacity:0; transition:opacity .4s; filter:blur(8px); }
@@ -83,6 +110,27 @@
   @media (max-width:640px){ .bento{ grid-template-columns:1fr 1fr; } .bento .tile.hero-tile{ grid-column:span 2; grid-row:auto; } }
 
   .controls{ position:sticky; top:52px; z-index:20; padding:0.7rem 0 0.5rem; margin:1.1rem 0 0.3rem; background:linear-gradient(var(--ground) 74%, transparent); display:flex; flex-direction:column; gap:0.6rem; }
+  .controls-body{ display:flex; flex-direction:column; gap:0.6rem; }
+
+  /* condensed state: once pinned, tuck the menu into one summary row */
+  .topbar{ transition:transform .28s cubic-bezier(.2,.7,.2,1); }
+  body.condensed .topbar{ transform:translateY(-100%); }
+  body.condensed.bar-reveal .topbar{ transform:none; }
+  body.condensed .controls{ top:0; padding:0.45rem 0; background:var(--glass); backdrop-filter:blur(14px) saturate(1.3); -webkit-backdrop-filter:blur(14px) saturate(1.3); border-bottom:1px solid var(--line-soft); }
+  body.condensed.bar-reveal .controls{ top:52px; }
+  body.condensed:not(.controls-open) .controls-body{ display:none; }
+  body.condensed.controls-open .controls-body{ position:absolute; top:100%; left:0; right:0; background:color-mix(in srgb, var(--ground) 86%, transparent); backdrop-filter:blur(18px) saturate(1.3); -webkit-backdrop-filter:blur(18px) saturate(1.3); border:1px solid var(--line-soft); border-top:none; border-radius:0 0 16px 16px; box-shadow:0 18px 34px rgba(0,0,0,.28); padding:0.75rem 0.9rem 0.95rem; max-height:70vh; overflow-y:auto; }
+  .mini-bar{ display:none; align-items:center; gap:0.4rem; overflow-x:auto; scrollbar-width:none; }
+  .mini-bar::-webkit-scrollbar{ display:none; }
+  body.condensed .mini-bar{ display:flex; }
+  .mini-chip{ flex:none; display:inline-flex; align-items:center; gap:0.32rem; font:inherit; font-size:0.74rem; font-weight:650; color:var(--text-2); background:var(--plate); border:1px solid var(--line); border-radius:999px; padding:0.26rem 0.6rem; cursor:pointer; white-space:nowrap; }
+  .mini-chip:hover{ color:var(--text); border-color:var(--goal); }
+  .mini-chip .dot2{ width:7px; height:7px; border-radius:50%; background:var(--goal); box-shadow:0 0 6px var(--goal); flex:none; }
+  .mini-chip.mc-count{ color:var(--text-3); border-style:dashed; cursor:default; font-weight:600; }
+  .mini-chip.mc-count:hover{ color:var(--text-3); border-color:var(--line); }
+  .mini-chip .chev2{ display:inline-block; transition:transform .25s; }
+  body.controls-open .mini-chip .chev2{ transform:rotate(180deg); }
+  .mini-chip[hidden]{ display:none; }
   .searchbar{ position:relative; display:flex; align-items:center; }
   .searchbar svg{ position:absolute; left:0.85rem; color:var(--text-3); pointer-events:none; }
   #search{ width:100%; font:inherit; font-size:0.95rem; color:var(--text); background:var(--plate); border:1px solid var(--line); border-radius:12px; padding:0.7rem 2.4rem 0.7rem 2.5rem; box-shadow:var(--shadow); }
@@ -199,6 +247,22 @@
   .card.open .details-in > *:nth-child(2){ animation-delay:.06s; } .card.open .details-in > *:nth-child(3){ animation-delay:.12s; } .card.open .details-in > *:nth-child(4){ animation-delay:.18s; } .card.open .details-in > *:nth-child(5){ animation-delay:.24s; }
   @keyframes riseIn{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:none;} }
 
+  /* compact entries on small screens: name + status first, tap to open */
+  @media (max-width:640px){
+    .grid{ grid-template-columns:1fr; gap:0.55rem; }
+    .card:not(.mob-open) .card-inner{ padding:0.72rem 2rem 0.75rem 0.9rem; gap:0.42rem; }
+    .card:not(.mob-open) .aka, .card:not(.mob-open) .pclass, .card:not(.mob-open) .oneliner,
+    .card:not(.mob-open) .comps, .card:not(.mob-open) .popmark, .card:not(.mob-open) .meterline,
+    .card:not(.mob-open) .watch-note, .card:not(.mob-open) .formline, .card:not(.mob-open) .toggle,
+    .card:not(.mob-open) .details-wrap{ display:none; }
+    .card .card-inner{ cursor:pointer; }
+    .card-inner::marker{ content:none; }
+    .mob-chev{ position:absolute; right:0.8rem; top:0.78rem; z-index:3; color:var(--text-3); font-size:1.05rem; line-height:1; transition:transform .25s; pointer-events:none; }
+    .card.mob-open .mob-chev{ transform:rotate(90deg); color:var(--goal); }
+    .card.mob-open .card-inner{ padding-right:2rem; }
+  }
+  @media (min-width:641px){ .mob-chev{ display:none; } }
+
   .legend{ display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; margin-top:2.4rem; padding-top:1.5rem; border-top:1px solid var(--line); font-size:0.82rem; }
   .legend h4{ font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-3); margin:0 0 0.6rem; }
   .legend .row{ display:flex; gap:0.55rem; align-items:center; margin-bottom:0.45rem; color:var(--text-2); }
@@ -265,6 +329,11 @@
     <span>Peptide&nbsp;Index</span><span class="tag">Global</span>
   </div>
   <div class="topbar-actions">
+    <a class="dex-btn" href="peptidex/" title="PEPTIDEX - the handheld field guide">
+      <span class="dex-lens" aria-hidden="true"></span>
+      <span class="dex-leds" aria-hidden="true"><i></i><i></i></span>
+      <span class="dex-lbl"><span class="dex-full">PEPTIDEX</span><span class="dex-short">DEX</span></span>
+    </a>
     <button class="icon-btn" id="legalBtn" title="Legal &amp; safety">⚖ <span class="hide-sm">Legal</span></button>
     <button class="icon-btn" id="themeBtn" aria-label="Switch day/night bench"><span id="themeIcon">◐</span> <span id="themeLbl">Night shift</span></button>
   </div>
@@ -290,7 +359,18 @@
     </div>
   </section>
 
+  <div id="ctrlSentinel" aria-hidden="true"></div>
   <div class="controls">
+    <div class="mini-bar" id="miniBar" aria-label="Active filters">
+      <button class="mini-chip" id="mcSearch" aria-label="Search"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg></button>
+      <button class="mini-chip" id="mcGoal"><span class="dot2"></span><span id="mcGoalLbl">Everything</span></button>
+      <button class="mini-chip" id="mcSort">Most talked-about</button>
+      <button class="mini-chip" id="mcLegal" hidden>Legal + proven</button>
+      <button class="mini-chip" id="mcQuery" hidden></button>
+      <span class="mini-chip mc-count" id="mcCount"></span>
+      <button class="mini-chip" id="mcOpen" aria-expanded="false">Filters <span class="chev2">v</span></button>
+    </div>
+    <div class="controls-body">
     <div class="searchbar" id="searchbar">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>
       <input id="search" type="text" placeholder="Search a peptide, blend or brand name — e.g. BPC-157, Wolverine, GLOW, GLP-1…" autocomplete="off" spellcheck="false" aria-label="Search compounds">
@@ -325,6 +405,7 @@
       <button class="tool-btn" id="testBtn"><span class="em">🧪</span> Test a product</button>
       <button class="tool-btn" id="srcBtn"><span class="em">✓</span> Legit sources</button>
       <button class="tool-btn" id="legalBtn2"><span class="em">⚖</span> Legal &amp; safety</button>
+    </div>
     </div>
   </div>
 
@@ -394,6 +475,7 @@ ITEMS.forEach(p=>{
     <div class="meterline"><div class="meter">${segs}</div><span class="trials"><b class="cu2" data-to="${p.trials||0}">0</b> ${trialLabel}</span></div>
     ${p.watch?`<div class="watch-note">On the FDA's July 2026 compounding shortlist — a non-binding panel recommendation. If rules follow it, a lawful prescriber route could open; until then, no lawful consumer supply.</div>`:''}
     <div class="formline"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6M10 3v5l-4 9a2 2 0 0 0 2 3h8a2 2 0 0 0 2-3l-4-9V3"/></svg><span>Ships as: ${esc(p.form||'—')}</span><button class="look" data-look="1">how it should look →</button></div>
+    <span class="mob-chev" aria-hidden="true">›</span>
     <button class="toggle" aria-expanded="false">The straight version <span class="chev">↓</span></button>
     <div class="details-wrap"><div class="details"><div class="details-in">
       <h4>What the evidence actually says</h4><p>${esc(p.what)}</p>
@@ -427,6 +509,7 @@ function applyLayout(animate){
   if(vis.length===0){ emptyEl=document.createElement('div'); emptyEl.className='empty'; emptyEl.innerHTML=query?`No match for “${esc(query)}”. Try a shorter name, an alias, or clear the search.`:'Nothing here for this filter.'; grid.appendChild(emptyEl); }
   const scope=query?`matching “${esc(query)}”`:activeGoal==='all'?'':activeGoal==='stacks'?'— named blends':'for this goal';
   countEl.innerHTML=`${vis.length} ${vis.length===1?'entry':'entries'} ${scope}${filterOn&&!query?', hype hidden':''} — ${sortMode==='pop'?'most talked-about first':'strongest evidence first'}`;
+  paintMini(vis.length);
   if(animate&&!RM){ let i=0; vis.forEach(c=>{ const f=first.get(c.dataset.id),last=c.getBoundingClientRect(); if(f){ const dx=f.left-last.left,dy=f.top-last.top; if(dx||dy){ c.style.transition='none'; c.style.transform=`translate(${dx}px,${dy}px)`; requestAnimationFrame(()=>requestAnimationFrame(()=>{ c.style.transition='transform 440ms cubic-bezier(.2,.7,.2,1)'; c.style.transform=''; })); } } else { c.style.transition='none'; c.style.opacity='0'; c.style.transform='translateY(14px)'; const d=Math.min(i,16)*20; requestAnimationFrame(()=>requestAnimationFrame(()=>{ c.style.transition=`opacity 360ms ${d}ms ease, transform 360ms ${d}ms cubic-bezier(.2,.7,.2,1)`; c.style.opacity=''; c.style.transform=''; })); } i++; }); }
 }
 
@@ -528,6 +611,35 @@ const themeBtn=document.getElementById('themeBtn'), themeLbl=document.getElement
 function curDark(){ const t=document.documentElement.getAttribute('data-theme'); if(t)return t==='dark'; return matchMedia('(prefers-color-scheme: dark)').matches; }
 function syncTheme(){ const d=curDark(); themeLbl.textContent=d?'Day shift':'Night shift'; themeIcon.textContent=d?'☀':'◐'; }
 themeBtn.addEventListener('click',()=>{ document.documentElement.setAttribute('data-theme',curDark()?'light':'dark'); syncTheme(); }); syncTheme();
+
+// condensed sticky controls + mini summary bar
+const mcGoalLbl=document.getElementById('mcGoalLbl'), mcSort=document.getElementById('mcSort'), mcLegal=document.getElementById('mcLegal'), mcQuery=document.getElementById('mcQuery'), mcCount=document.getElementById('mcCount'), mcOpen=document.getElementById('mcOpen');
+function paintMini(visCount){
+  const gc=chips.find(c=>c.dataset.goal===activeGoal);
+  mcGoalLbl.textContent=gc?gc.textContent.trim():'Everything';
+  mcSort.textContent=sortMode==='pop'?'Most talked-about':'Strongest evidence';
+  mcLegal.hidden=!filterOn;
+  mcQuery.hidden=!query; if(query) mcQuery.textContent='“'+query+'”';
+  if(typeof visCount==='number') mcCount.textContent=visCount+(visCount===1?' entry':' entries');
+}
+function openControls(o){ document.body.classList.toggle('controls-open',o); mcOpen.setAttribute('aria-expanded',String(o)); }
+mcOpen.addEventListener('click',()=>openControls(!document.body.classList.contains('controls-open')));
+[document.getElementById('mcGoal'),mcSort,mcLegal,mcQuery].forEach(b=>b.addEventListener('click',()=>openControls(true)));
+document.getElementById('mcSearch').addEventListener('click',()=>{ openControls(true); setTimeout(()=>search.focus(),60); });
+new IntersectionObserver(es=>{ es.forEach(en=>{ const c=!en.isIntersecting&&en.boundingClientRect.top<0; document.body.classList.toggle('condensed',c); if(!c){ openControls(false); document.body.classList.remove('bar-reveal'); } }); },{rootMargin:'-53px 0px 0px 0px'}).observe(document.getElementById('ctrlSentinel'));
+let lastY=window.scrollY;
+window.addEventListener('scroll',()=>{ const y=window.scrollY,dy=y-lastY; lastY=y;
+  if(!document.body.classList.contains('condensed'))return;
+  if(dy<-6) document.body.classList.add('bar-reveal');
+  else if(dy>6){ document.body.classList.remove('bar-reveal'); if(dy>28) openControls(false); }
+},{passive:true});
+// compact entries on small screens: tap the row to open the full card
+grid.addEventListener('click',e=>{
+  if(window.innerWidth>640) return;
+  if(e.target.closest('button,.pill-flip,.watch,a,input')) return;
+  const c=e.target.closest('.card'); if(!c) return;
+  c.classList.toggle('mob-open');
+});
 
 requestAnimationFrame(()=>{ moveIndicator(chips[0]); applyLayout(true); });
 window.addEventListener('resize',()=>moveIndicator(chips.find(c=>c.dataset.goal===activeGoal)||chips[0]));
