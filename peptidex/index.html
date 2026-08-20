@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#1A0709">
+<meta name="theme-color" content="#070B18">
 <style>
   @font-face {
     font-family: 'PixelDisplay';
@@ -20,15 +20,15 @@
   }
 
   :root {
-    --void: #1A0709;
-    --shell: #331018;
-    --shell-hi: #4A1622;
-    --panel: #280C12;
-    --bezel: #F0776C;
-    --bezel-dim: #6E2A32;
+    --void: #070B18;
+    --shell: #101A33;
+    --shell-hi: #16244A;
+    --panel: #0C1428;
+    --bezel: #6FC7F0;
+    --bezel-dim: #2A4A6E;
     --cream: #F4E9CE;
-    --ink: #EFC9CD;
-    --muted: #AD7C85;
+    --ink: #C9D6EF;
+    --muted: #7C8BAD;
     --red: #E23D3D;
     --red-deep: #8E1F1F;
     --lcd-bg: #0B1A12;
@@ -55,9 +55,9 @@
   body {
     margin: 0;
     background:
-      radial-gradient(ellipse 120% 60% at 50% 118%, rgba(240,119,108,0.14), transparent 60%),
-      repeating-linear-gradient(0deg, transparent 0 31px, rgba(240,119,108,0.055) 31px 32px),
-      repeating-linear-gradient(90deg, transparent 0 31px, rgba(240,119,108,0.055) 31px 32px),
+      radial-gradient(ellipse 120% 60% at 50% 118%, rgba(111,199,240,0.14), transparent 60%),
+      repeating-linear-gradient(0deg, transparent 0 31px, rgba(111,199,240,0.055) 31px 32px),
+      repeating-linear-gradient(90deg, transparent 0 31px, rgba(111,199,240,0.055) 31px 32px),
       var(--void);
     background-attachment: fixed;
     color: var(--ink);
@@ -97,7 +97,7 @@
     padding: calc(env(safe-area-inset-top, 0px) + 8px) 10px 8px;
     background: linear-gradient(180deg, var(--shell-hi), var(--shell));
     border-bottom: 3px solid var(--bezel-dim);
-    box-shadow: 0 0 18px rgba(240,119,108,0.18), inset 0 1px 0 rgba(255,255,255,0.08);
+    box-shadow: 0 0 18px rgba(111,199,240,0.18), inset 0 1px 0 rgba(255,255,255,0.08);
   }
   .marquee-row {
     display: flex; align-items: center; gap: 10px;
@@ -119,7 +119,7 @@
   }
   .led {
     width: 12px; height: 12px; border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #FFC9BF, var(--bezel) 55%, #8E2A1B);
+    background: radial-gradient(circle at 35% 30%, #BFE9FF, var(--bezel) 55%, #1B6FA0);
     box-shadow: 0 0 8px var(--bezel), 0 0 2px #fff inset;
     animation: ledpulse 2.4s ease-in-out infinite;
     flex: none;
@@ -294,7 +294,7 @@
   .card .meta { display: flex; align-items: center; gap: 5px; margin-top: auto; flex-wrap: wrap; }
   .tdot { width: 8px; height: 8px; flex: none; }
   .pips { display: inline-flex; gap: 2px; margin-left: auto; }
-  .pip { width: 6px; height: 9px; background: #401A20; }
+  .pip { width: 6px; height: 9px; background: #1A2440; }
   .pip.f-strong { background: var(--ev-strong); }
   .pip.f-some { background: var(--ev-some); }
   .pip.f-pre { background: var(--ev-pre); }
@@ -417,7 +417,7 @@
       height: calc(100dvh - 28px);
       transform: none; visibility: visible; transition: none;
       border: 3px solid var(--bezel-dim); border-radius: 14px;
-      box-shadow: 0 0 0 6px var(--shell), 0 0 34px rgba(0,0,0,0.55), 0 0 18px rgba(240,119,108,0.12);
+      box-shadow: 0 0 0 6px var(--shell), 0 0 34px rgba(0,0,0,0.55), 0 0 18px rgba(111,199,240,0.12);
       overflow: hidden;
     }
     .lcd.idle .lcd-head, .lcd.idle .lcd-scroll, .lcd.idle .lcd-nav { display: none; }
@@ -1066,7 +1066,7 @@
     var isScam = s.id.indexOf('007') !== -1;
     var card = h('button', 'stackcard' + (isScam ? ' scam' : ''));
     card.dataset.idx = idx;
-    card.appendChild(spriteCanvas(s.id, isScam ? '#E23D3D' : '#F4E9CE'));
+    card.appendChild(spriteCanvas(s.id, isScam ? '#E23D3D' : '#6FC7F0'));
     var txt = h('div');
     txt.appendChild(h('div', 'sname', 'S' + (idx + 1) + ' · ' + s.name));
     txt.appendChild(h('div', 'scomp', (s.components || []).join(' + ')));
@@ -1139,7 +1139,7 @@
     var item = kind === 'p' ? P[idx] : S[idx];
     var isScam = kind === 's' && item.id.indexOf('007') !== -1;
     var g = primaryGoal(item);
-    var baseC = kind === 'p' ? GOALS[g].c : (isScam ? '#E23D3D' : '#F4E9CE');
+    var baseC = kind === 'p' ? GOALS[g].c : (isScam ? '#E23D3D' : '#6FC7F0');
     var numLabel = kind === 'p' ? '#' + pad3(idx + 1) : 'S' + (idx + 1);
 
     var firstScan = kind === 'p' && !scanned[item.id];
